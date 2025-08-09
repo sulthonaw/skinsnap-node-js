@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  googleId      String         @unique
+  email         String         @unique
+  name          String
+  avatarUrl     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  skinAnalyses  SkinAnalysis[]
+
+  @@map("users")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  author      String?
+  imageUrl    String?
+  category    String
+  publishedAt DateTime @default(now())
+
+  @@map("articles")
+}
+
+model Doctor {
+  id          String  @id @default(cuid())
+  name        String
+  specialty   String  @default("Dermatologist")
+  address     String
+  phoneNumber String?
+  latitude    Float
+  longitude   Float
+
+  @@map("doctors")
+}
+
+model SkinAnalysis {
+  id                   String   @id @default(cuid())
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id])
+  imageUrl             String
+  acneLevel            String
+  redness              String
+  skinType             String
+  productRecommendations Json
+  analyzedAt           DateTime @default(now())
+
+  @@map("skin_analyses")
+}
