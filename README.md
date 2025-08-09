@@ -16,7 +16,7 @@ Sebelum memulai, pastikan Anda sudah menginstal:
    ```
 
 2. **Siapkan database PostgreSQL**
-   - Buat database dengan nama:
+   Buat database dengan nama:
      ```
      db_skin_snap
      ```
